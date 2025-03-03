@@ -17,12 +17,12 @@ dependencies = [
     "imageio>=2.36.1",
     "jax[cuda12]==0.5.0",
     "jaxtyping==0.2.36",
-    #"lerobot",
+    "lerobot",
     "ml_collections==1.0.0",
     "numpy>=1.26.4",
     "numpydantic>=1.6.6",
     "opencv-python>=4.10.0.84",
-    #"openpi-client",
+    "openpi-client @ file:./packages/openpi-client",  # 去掉多余的斜杠
     "orbax-checkpoint==0.11.1",
     "pillow>=11.0.0",
     "s3fs==2024.9.0",
@@ -57,8 +57,8 @@ dev = [
 
 
 [tool.uv.sources]
-openpi-client = { workspace = true }
-lerobot = { git = "https://github.com/huggingface/lerobot", rev = "6674e368249472c91382eb54bb8501c94c7f0c56" }
+# openpi-client = { workspace = true }
+lerobot = { git = "https://github.com/openverse-orca/lerobot", rev = "8861546ad8d4929f6ff7e12420c5722a666eab11" }
 
 [tool.uv.workspace]
 members = ["packages/*"]
@@ -122,8 +122,11 @@ single-line-exclusions = ["collections.abc", "typing", "typing_extensions"]
 known-third-party = ["wandb"]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.24.0"]  # 确保版本 >=1.24.0
 build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true  # 允许直接引用
 
 [tool.pytest.ini_options]
 markers = ["manual: should be run manually."]
