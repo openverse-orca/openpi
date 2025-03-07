@@ -49,6 +49,7 @@ class WebsocketPolicyServer:
         while True:
             try:
                 obs = msgpack_numpy.unpackb(await websocket.recv())
+                # print("Server received obs: ", obs)
                 action = self._policy.infer(obs)
                 await websocket.send(packer.pack(action))
             except websockets.ConnectionClosed:

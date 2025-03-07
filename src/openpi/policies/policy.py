@@ -40,8 +40,14 @@ class Policy(BasePolicy):
     @override
     def infer(self, obs: dict) -> dict:  # type: ignore[misc]
         # Make a copy since transformations may modify the inputs in place.
+        
+        # print("Policy infer, obs: ", obs)
+        
         inputs = jax.tree.map(lambda x: x, obs)
         inputs = self._input_transform(inputs)
+        
+        # print("Policy infer, transform inputs: ", inputs)
+        
         # Make a batch and convert to jax.Array.
         inputs = jax.tree.map(lambda x: jnp.asarray(x)[np.newaxis, ...], inputs)
 
